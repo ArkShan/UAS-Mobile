@@ -71,11 +71,23 @@ public class MainActivity extends AppCompatActivity {
     private ProgressDialog progressDialog;
     private boolean doubleBackToExitPressedOnce = false;
     private Toast backPressToast;
+    DatabaseHelper db;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        //Koneksi Database Login SQLite
+        db = new DatabaseHelper(this);
+
+
+        Boolean checkSession = db.checkSession("kosong");
+        if(checkSession == false) {
+            Intent loginIntent = new Intent(MainActivity.this, LoginActivity.class);
+            startActivity(loginIntent);
+            finish();
+        }
 
         //CheckForUpdate();
 
